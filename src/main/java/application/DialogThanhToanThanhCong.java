@@ -1,3 +1,8 @@
+/**
+ * La Võ Minh Quân
+ * 19441111
+ * Mô tả: xuất ra thông tin khi thanh toán thành công
+ */
 package application;
 
 import java.awt.BorderLayout;
@@ -50,10 +55,15 @@ public class DialogThanhToanThanhCong extends JDialog {
 	 * Create the dialog.
 	 */
 	public DialogThanhToanThanhCong() {
+		
+		/*set color and font*/
 		Font tahoma20 = new Font("Tahoma", Font.BOLD, 20);
 		Font tahoma13Bold = new Font("Tahoma", Font.BOLD, 13);
 		Font tahoma14 = new Font("Tahoma", Font.PLAIN, 14);
 		Font tahoma18Bold = new Font("Tahoma", Font.BOLD, 18);
+		
+		Color mainColor = new Color(88,159,177);
+		Color hoverColor = new Color(121,178,192);
 
 		setResizable(false);
 		setBounds(100, 100, 823, 447);
@@ -121,6 +131,17 @@ public class DialogThanhToanThanhCong extends JDialog {
 				dispose();
 			}
 		});
+		
+		btnDong.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnDong.setBackground(hoverColor);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnDong.setBackground(mainColor);
+		    }
+		});
+		
 		btnDong.setRequestFocusEnabled(false);
 		btnDong.setFont(tahoma13Bold);
 		btnDong.setBounds(396, 365, 89, 32);
@@ -134,6 +155,17 @@ public class DialogThanhToanThanhCong extends JDialog {
 				danhSachHoaDon.setVisible(true);
 			}
 		});
+		
+		btnXemHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnXemHoaDon.setBackground(hoverColor);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnXemHoaDon.setBackground(mainColor);
+		    }
+		});
+		
 		btnXemHoaDon.setRequestFocusEnabled(false);
 		btnXemHoaDon.setFont(tahoma13Bold);
 		btnXemHoaDon.setBounds(215, 365, 158, 32);
@@ -194,9 +226,12 @@ public class DialogThanhToanThanhCong extends JDialog {
 		tblDichVu.setRowHeight(28);
 		tblDichVu.setAutoCreateRowSorter(true);
 		tblDichVu.getTableHeader().setFont(tahoma14);
-		// chỉ cho khách hàng được chọn 1 dòng ở 1 thời điểm
 		tblDichVu.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(tblDichVu);
+		
+		btnDong.setBackground(mainColor);
+		btnXemHoaDon.setBackground(mainColor);
+		
 		
 		JLabel lblNewLabel_2 = new JLabel("Danh sách dịch vụ");
 		lblNewLabel_2.setBounds(469, 102, 103, 14);

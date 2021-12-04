@@ -18,7 +18,6 @@ import java.util.List;
 
 import connectDB.MSSQLConnection;
 import entity.KhachHang;
-import entity.LoaiPhong;
 import entity.Phong;
 import entity.DonDatPhong;
 

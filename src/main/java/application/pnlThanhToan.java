@@ -30,6 +30,7 @@ import java.util.Locale;
 
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -37,6 +38,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import connectDB.MSSQLConnection;
 import dao.ChiTietHoaDonDao;
@@ -63,6 +65,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class pnlThanhToan extends JPanel implements ActionListener {
 	/**
@@ -92,6 +96,8 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 
 	private DialogDanhSachHoaDon danhSachHoaDon;
 	private JLabel lblTongTienHoaDon;
+	private JLabel lblNewLabel_1;
+	private JTextField txtTienKhachDua;
 
 	/**
 	 * Create the panel.
@@ -107,7 +113,6 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 		Color hovertextColor = new Color(250, 130, 49);
 
 		Font tahoma18Bold = new Font("Tahoma", Font.BOLD, 18);
-		;
 		Font tahoma15Bold = new Font("Tahoma", Font.BOLD, 15);
 		Font tahoma13Bold = new Font("Tahoma", Font.BOLD, 13);
 		Font tahoma14Bold = new Font("Tahoma", Font.BOLD, 14);
@@ -120,19 +125,26 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 		lblNewLabel.setFont(tahoma18Bold);
 
 		txtTimPhong = new JTextField();
+		txtTimPhong.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String searchStr = txtTimPhong.getText();
+				search(searchStr);
+			}
+		});
 		txtTimPhong.addFocusListener(new FocusAdapter() {
-			 @Override
-			    public void focusGained(FocusEvent e) {
-			        txtTimPhong.setBorder(BorderFactory.createLineBorder(hoverColor));
-			        txtTimPhong.setForeground(hovertextColor);
-			    }
+			@Override
+			public void focusGained(FocusEvent e) {
+				txtTimPhong.setBorder(BorderFactory.createLineBorder(hoverColor));
+				txtTimPhong.setForeground(hovertextColor);
+			}
 
-			    @Override
-			    public void focusLost(FocusEvent e) {
-			    	txtTimPhong.setBorder(BorderFactory.createLineBorder(seperatorColor));
-			    	txtTimPhong.setForeground(blackColor);
-			    }
-       });
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtTimPhong.setBorder(BorderFactory.createLineBorder(seperatorColor));
+				txtTimPhong.setForeground(blackColor);
+			}
+		});
 		txtTimPhong.setFont(tahoma16);
 		txtTimPhong.setColumns(10);
 
@@ -183,7 +195,9 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane_phongSuDung, GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(scrollPane_phongSuDung, GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
+							.addContainerGap())
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
@@ -226,7 +240,7 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblNewLabel)
-								.addComponent(txtTimPhong))
+								.addComponent(txtTimPhong, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(26)
 							.addComponent(lblNewLabel_2))
 						.addComponent(btnXemDanhSachHD, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
@@ -269,24 +283,55 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 		lblTongTienHoaDon = new JLabel("Tổng tiền:");
 		lblTongTienHoaDon.setForeground(Color.RED);
 		lblTongTienHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		lblNewLabel_1 = new JLabel("Tiền khách đưa:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		txtTienKhachDua = new JTextField();
+		txtTienKhachDua.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtTienKhachDua.setColumns(10);
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup().addGap(75)
-								.addComponent(btnThanhToan, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE).addGap(53))
-						.addGroup(gl_panel_1.createSequentialGroup().addContainerGap().addComponent(lblNewLabel_5)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(txtNhanVienLap, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
-						.addGroup(gl_panel_1.createSequentialGroup().addContainerGap().addComponent(lblTongTienHoaDon)))
-						.addContainerGap()));
-		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_1
-				.createSequentialGroup().addContainerGap()
-				.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel_5).addComponent(
-						txtNhanVienLap, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-						GroupLayout.PREFERRED_SIZE))
-				.addGap(18).addComponent(lblTongTienHoaDon).addGap(87)
-				.addComponent(btnThanhToan, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-				.addContainerGap(61, Short.MAX_VALUE)));
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblNewLabel_5)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtNhanVienLap, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblTongTienHoaDon)))
+					.addContainerGap())
+				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+					.addGap(75)
+					.addComponent(btnThanhToan, GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+					.addGap(63))
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel_1)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txtTienKhachDua, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_5)
+						.addComponent(txtNhanVienLap, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(lblTongTienHoaDon)
+					.addGap(18)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_1)
+						.addComponent(txtTienKhachDua, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+					.addComponent(btnThanhToan, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addGap(42))
+		);
 		panel_1.setLayout(gl_panel_1);
 
 		JLabel lblNewLabel_4 = new JLabel("Lo\u1EA1i th\u1EF1c ph\u1EA9m:");
@@ -355,33 +400,30 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-								.addGroup(Alignment.LEADING,
-										gl_panel.createSequentialGroup().addContainerGap().addComponent(btnLamMoi,
-												GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
-								.addGroup(Alignment.LEADING,
-										gl_panel.createSequentialGroup()
-												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-														.addComponent(lblNewLabel_4_1, GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-														.addComponent(lblNewLabel_4, GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-														.addComponent(cmbLoaiThucPham, 0, 166, Short.MAX_VALUE)
-														.addComponent(cmbTenThucPham, 0, 166, Short.MAX_VALUE)))
-								.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup().addContainerGap().addComponent(btnLamMoi,
+										GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
+								.addGroup(gl_panel.createSequentialGroup()
+										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+												.addComponent(lblNewLabel_4_1, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(lblNewLabel_4, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+												.addComponent(cmbLoaiThucPham, 0, 166, Short.MAX_VALUE)
+												.addComponent(cmbTenThucPham, 0, 166, Short.MAX_VALUE)))
+								.addGroup(gl_panel.createSequentialGroup()
 										.addComponent(lblNewLabel_4_1_1, GroupLayout.PREFERRED_SIZE, 104,
 												GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(ComponentPlacement.RELATED)
 										.addComponent(txtSoLuong, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
-								.addGroup(Alignment.LEADING,
-										gl_panel.createSequentialGroup().addContainerGap()
-												.addComponent(btnXoa, GroupLayout.PREFERRED_SIZE, 131,
-														GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnCapNhat,
-														GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
-								.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup().addContainerGap()
+								.addGroup(gl_panel.createSequentialGroup().addContainerGap()
+										.addComponent(btnXoa, GroupLayout.PREFERRED_SIZE, 131,
+												GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnCapNhat,
+												GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel.createSequentialGroup().addContainerGap()
 										.addComponent(btnThemThucPham, GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)))
 						.addContainerGap()));
 		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
@@ -404,7 +446,7 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 				.addGap(23).addComponent(btnThemThucPham, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
 				.addPreferredGap(ComponentPlacement.RELATED)
 				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnCapNhat, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnXoa, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
 				.addPreferredGap(ComponentPlacement.RELATED)
 				.addComponent(btnLamMoi, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE).addGap(21)));
@@ -536,6 +578,13 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 		setLayout(groupLayout);
 
 		txtNhanVienLap.setText(ShareData.taiKhoanDangNhap.getNhanVien().getHoTen());
+
+		cmbTimKiem.addItem("Tìm theo mã phòng");
+		cmbTimKiem.addItem("Tìm theo tên phòng");
+		cmbTimKiem.addItem("Tìm theo loại phòng");
+		cmbTimKiem.addItem("Tìm theo đơn giá");
+		cmbTimKiem.addItem("Tìm theo thời gian vào");
+		cmbTimKiem.addItem("Tìm theo khách hàng");
 
 		initTablePhongSuDung();
 		initTableDichVu();
@@ -717,6 +766,7 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 
 					dfModelDichVu.setRowCount(0);
 					loadDataCTHD();
+					txtSoLuong.setText("");
 
 					int rowPhong = tblPhongDangSuDung.getSelectedRow();
 					tinhTongTien(rowPhong);
@@ -901,5 +951,35 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 		NumberFormat format = NumberFormat.getCurrencyInstance(locale);
 
 		lblTongTienHoaDon.setText("Tổng tiền: " + String.valueOf(format.format(tongTien)));
+	}
+
+	public void search(String str) {
+		dfModelPhongSuDung = (DefaultTableModel) tblPhongDangSuDung.getModel();
+		TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(dfModelPhongSuDung);
+		tblPhongDangSuDung.setRowSorter(trs);
+
+		if (cmbTimKiem.getSelectedItem().toString().equals("Tìm theo mã phòng")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 1));
+		}
+
+		if (cmbTimKiem.getSelectedItem().toString().equals("Tìm theo tên phòng")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 2));
+		}
+
+		if (cmbTimKiem.getSelectedItem().toString().equals("Tìm theo loại phòng")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 3));
+		}
+
+		if (cmbTimKiem.getSelectedItem().toString().equals("Tìm theo đơn giá")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 4));
+		}
+
+		if (cmbTimKiem.getSelectedItem().toString().equals("Tìm theo thời gian vào")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 5));
+		}
+
+		if (cmbTimKiem.getSelectedItem().toString().equals("Tìm theo khách hàng")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 6));
+		}
 	}
 }

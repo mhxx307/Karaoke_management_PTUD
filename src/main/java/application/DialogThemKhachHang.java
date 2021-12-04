@@ -1,3 +1,7 @@
+/**
+ * Tác giả: La Võ Minh Quân - 19441111
+ * Mô tả: dialog thêm khách hàng khi chưa có số điện thoại
+ */
 package application;
 
 import javax.swing.JButton;

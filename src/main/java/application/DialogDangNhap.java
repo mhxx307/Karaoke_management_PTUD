@@ -53,21 +53,8 @@ public class DialogDangNhap extends JDialog implements ActionListener {
 	private JButton btnThoat;
 
 	private TaiKhoanDAO taiKhoanDAO;
-
 	private DialogQuenMatKhau quenMatKhauDialog;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			DialogDangNhap dialog = new DialogDangNhap();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.

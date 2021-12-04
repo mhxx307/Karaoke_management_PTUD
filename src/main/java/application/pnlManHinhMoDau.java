@@ -1,3 +1,7 @@
+/**
+ * La Võ Minh Quân - 19441111
+ * màn hình mở đầu khi bắt đầu ứng dụng
+ */
 package application;
 
 import javax.swing.JPanel;

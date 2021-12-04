@@ -1,3 +1,8 @@
+/**
+ * La Võ Minh Quân
+ * 19441111
+ * Mô tả: dialog danh sách các hóa đơn theo người lập
+ */
 package application;
 
 import javax.swing.JButton;
@@ -6,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import dao.ChiTietHoaDonDao;
 import dao.HoaDonDao;
@@ -23,7 +29,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-
+import javax.swing.RowFilter;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -49,12 +55,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtTimKiem;
@@ -169,6 +174,14 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 24));
 		txtTimKiem = new JTextField();
+		txtTimKiem.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String searchString = txtTimKiem.getText();
+				search(searchString);	
+			}
+		});
+		
 		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtTimKiem.setColumns(10);
 
@@ -179,27 +192,37 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 		cmbTimHD.setFocusable(false);
 		cmbTimHD.setFocusTraversalKeysEnabled(false);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(groupLayout.createSequentialGroup().addGap(176)
-								.addComponent(cmbTimHD, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(txtTimKiem, GroupLayout.PREFERRED_SIZE, 244, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(lblNewLabel_2,
-								GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE))
-						.addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE).addComponent(
-								lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addContainerGap(1, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(lblNewLabel_1).addGap(16)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(txtTimKiem, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cmbTimHD, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))
-						.addGap(16).addComponent(lblNewLabel_2).addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 486, GroupLayout.PREFERRED_SIZE)
-						.addGap(46)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(140)
+							.addComponent(cmbTimHD, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtTimKiem, GroupLayout.PREFERRED_SIZE, 244, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE))
+						.addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
+						.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(1, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel_1)
+					.addGap(16)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(txtTimKiem, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cmbTimHD, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(16)
+					.addComponent(lblNewLabel_2)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 486, GroupLayout.PREFERRED_SIZE)
+					.addGap(46))
+		);
 		getContentPane().setLayout(groupLayout);
 
 		btnQuayLai.setBackground(mainColor);
@@ -225,6 +248,11 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 				btnXuatHoaDon.setBackground(mainColor);
 			}
 		});
+		
+		cmbTimHD.addItem("Tìm theo mã hóa đơn");
+		cmbTimHD.addItem("Tìm theo tên khách hàng");
+		cmbTimHD.addItem("Tìm theo ngày lập");
+		cmbTimHD.addItem("Tìm theo tổng tiền");
 
 		initTableHoaDon();
 		initTableChiTietSanPham();
@@ -232,6 +260,7 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 
 		btnQuayLai.addActionListener(this);
 		btnXuatHoaDon.addActionListener(this);
+		
 	}
 
 	private void initTableHoaDon() {
@@ -276,6 +305,8 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 		if (o.equals(btnQuayLai)) {
 			dispose();
 		}
+		
+		
 		if (o.equals(btnXuatHoaDon)) {
 
 			try {
@@ -295,9 +326,9 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 							Cell cell = rowCol.createCell(i);
 							cell.setCellValue(tblChiTietHoaDon.getColumnName(i));
 						}
-						
+
 						int col = 3;
-						
+
 						for (int j = 0; j < tblChiTietHoaDon.getRowCount(); ++j) {
 							col++;
 							Row row1 = sheet.createRow(j + 1);
@@ -308,30 +339,29 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 								}
 							}
 						}
-						
+
 						Row rowCol1 = sheet.createRow(col);
 						for (int i = 0; i < tblHoaDon.getColumnCount(); ++i) {
 							Cell cell = rowCol1.createCell(i);
 							cell.setCellValue(tblHoaDon.getColumnName(i));
 						}
-						
+
 						Row rowCol2 = sheet.createRow(col + 1);
-						
+
 						Cell celMaHD = rowCol2.createCell(0);
 						celMaHD.setCellValue(tblHoaDon.getValueAt(rowHD, 0).toString());
-						
+
 						Cell celNV = rowCol2.createCell(1);
 						celNV.setCellValue(tblHoaDon.getValueAt(rowHD, 1).toString());
-						
+
 						Cell cellTenKH = rowCol2.createCell(2);
 						cellTenKH.setCellValue(tblHoaDon.getValueAt(rowHD, 2).toString());
-						
+
 						Cell cellNgayLap = rowCol2.createCell(3);
 						cellNgayLap.setCellValue(tblHoaDon.getValueAt(rowHD, 3).toString());
-						
+
 						Cell cellTongTien = rowCol2.createCell(4);
 						cellTongTien.setCellValue(tblHoaDon.getValueAt(rowHD, 4).toString());
-						
 
 						FileOutputStream out = new FileOutputStream(new File(saveFile.toString()));
 						workbook.write(out);
@@ -375,6 +405,28 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void search(String str) {
+		dfModelHoaDon = (DefaultTableModel) tblHoaDon.getModel();
+		TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(dfModelHoaDon);
+		tblHoaDon.setRowSorter(trs);
+		
+		if (cmbTimHD.getSelectedItem().toString().equals("Tìm theo mã hóa đơn")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 0));
+		}
+		
+		if (cmbTimHD.getSelectedItem().toString().equals("Tìm theo tên khách hàng")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 2));
+		}
+		
+		if (cmbTimHD.getSelectedItem().toString().equals("Tìm theo ngày lập")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 3));
+		}
+		
+		if (cmbTimHD.getSelectedItem().toString().equals("Tìm theo tổng tiền")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 4));
 		}
 	}
 }

@@ -1,3 +1,8 @@
+/**
+ * Tác giả: La Võ Minh Quân - 19441111
+ * Mô tả: Thông báo với người dùng là số điện thoại này vẫn chưa có tồn tại hỏi xem có nne6
+ * thêm khách hàng mới hay không
+ */
 package application;
 
 import java.awt.BorderLayout;

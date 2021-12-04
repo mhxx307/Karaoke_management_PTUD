@@ -21,6 +21,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Insets;
 
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
@@ -43,6 +44,7 @@ import java.awt.event.InputEvent;
 import java.awt.Cursor;
 import javax.swing.JLayeredPane;
 import java.awt.CardLayout;
+import javax.swing.SwingConstants;
 
 public class MainFrame extends JFrame implements ActionListener {
 
@@ -216,7 +218,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		/** btn quản lý nhân viên **/
 		btnQLNhanVien = new JButton("Qu\u1EA3n l\u00FD nh\u00E2n vi\u00EAn");
-		btnQLNhanVien.setBorder(null);
+		btnQLNhanVien.setHorizontalAlignment(SwingConstants.LEADING);
+		btnQLNhanVien.setBorder(new EmptyBorder(0, 10, 0, 0));
 		btnQLNhanVien.setBorderPainted(false);
 		btnQLNhanVien.setFocusPainted(false);
 		btnQLNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -229,18 +232,19 @@ public class MainFrame extends JFrame implements ActionListener {
 		    }
 		});
 		btnQLNhanVien.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnQLNhanVien.setIcon(new ImageIcon(getClass().getResource("/images/conference-16.png")));
+		btnQLNhanVien.setIcon(new ImageIcon(getClass().getResource("/images/employees.png")));
 		btnQLNhanVien.setFocusable(false);
 		btnQLNhanVien.setFont(tahoma14);
 		btnQLNhanVien.setBackground(whiteColor);
 
 		/** btn quản lý tài khoản **/
 		btnQLTaiKhoan = new JButton("Qu\u1EA3n l\u00FD t\u00E0i kho\u1EA3n");
-		btnQLTaiKhoan.setBorder(null);
+		btnQLTaiKhoan.setHorizontalAlignment(SwingConstants.LEADING);
+		btnQLTaiKhoan.setBorder(new EmptyBorder(0, 10, 0, 0));
 		btnQLTaiKhoan.setBorderPainted(false);
 		btnQLTaiKhoan.setFocusPainted(false);
 		btnQLTaiKhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnQLTaiKhoan.setIcon(new ImageIcon(getClass().getResource("/images/user-16.png")));
+		btnQLTaiKhoan.setIcon(new ImageIcon(getClass().getResource("/images/account.png")));
 		btnQLTaiKhoan.setFont(tahoma14);
 		btnQLTaiKhoan.setFocusable(false);
 		btnQLTaiKhoan.setBackground(whiteColor);
@@ -256,11 +260,12 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		/** btn thống kê **/
 		btnQLThongKe = new JButton("Qu\u1EA3n l\u00FD th\u1ED1ng k\u00EA");
-		btnQLThongKe.setBorder(null);
+		btnQLThongKe.setHorizontalAlignment(SwingConstants.LEADING);
+		btnQLThongKe.setBorder(new EmptyBorder(0, 10, 0, 0));
 		btnQLThongKe.setBorderPainted(false);
 		btnQLThongKe.setFocusPainted(false);
 		btnQLThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnQLThongKe.setIcon(new ImageIcon(getClass().getResource("/images/line-16.png")));
+		btnQLThongKe.setIcon(new ImageIcon(getClass().getResource("/images/thongke.png")));
 		btnQLThongKe.setFont(tahoma14);
 		btnQLThongKe.setFocusable(false);
 		btnQLThongKe.setBackground(whiteColor);
@@ -276,11 +281,12 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		/** btn quản lý sản phẩm **/
 		btnQLSanPham = new JButton("Qu\u1EA3n l\u00FD s\u1EA3n ph\u1EA9m");
-		btnQLSanPham.setBorder(null);
+		btnQLSanPham.setHorizontalAlignment(SwingConstants.LEADING);
+		btnQLSanPham.setBorder(new EmptyBorder(0, 10, 0, 0));
 		btnQLSanPham.setBorderPainted(false);
 		btnQLSanPham.setFocusPainted(false);
 		btnQLSanPham.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnQLSanPham.setIcon(new ImageIcon(getClass().getResource("/images/product-16.png")));
+		btnQLSanPham.setIcon(new ImageIcon(getClass().getResource("/images/product.png")));
 		btnQLSanPham.setFont(tahoma14);
 		btnQLSanPham.setFocusable(false);
 		btnQLSanPham.setBackground(whiteColor);
@@ -296,11 +302,12 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		/** btn quản lý phòng **/
 		btnQLPhong = new JButton("Quản lý phòng");
-		btnQLPhong.setBorder(null);
+		btnQLPhong.setHorizontalAlignment(SwingConstants.LEADING);
+		btnQLPhong.setBorder(new EmptyBorder(0, 10, 0, 0));
 		btnQLPhong.setBorderPainted(false);
 		btnQLPhong.setFocusPainted(false);
 		btnQLPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnQLPhong.setIcon(new ImageIcon(getClass().getResource("/images/door-2-16.png")));
+		btnQLPhong.setIcon(new ImageIcon(getClass().getResource("/images/door.png")));
 		btnQLPhong.setFont(tahoma14);
 		btnQLPhong.setFocusable(false);
 		btnQLPhong.setBackground(whiteColor);
@@ -316,11 +323,12 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		/** btn đặt đồ ăn **/
 		btnDatPhong = new JButton("Đặt phòng");
-		btnDatPhong.setBorder(null);
+		btnDatPhong.setHorizontalAlignment(SwingConstants.LEADING);
+		btnDatPhong.setBorder(new EmptyBorder(0, 10, 0, 0));
 		btnDatPhong.setBorderPainted(false);
 		btnDatPhong.setFocusPainted(false);
 		btnDatPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//		btnDatPhong.setIcon(new ImageIcon(getClass().getResource("/images/hamburger-16.png")));
+		btnDatPhong.setIcon(new ImageIcon(getClass().getResource("/images/order.png")));
 		btnDatPhong.setFont(tahoma14);
 		btnDatPhong.setFocusable(false);
 		btnDatPhong.setBackground(whiteColor);
@@ -352,7 +360,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		});
 
 		btnQuanLyKhachHang = new JButton("Quản lý khách hàng");
-		btnQuanLyKhachHang.setBorder(null);
+		btnQuanLyKhachHang.setHorizontalAlignment(SwingConstants.LEADING);
+		btnQuanLyKhachHang.setBorder(new EmptyBorder(0, 10, 0, 0));
 		btnQuanLyKhachHang.setBorderPainted(false);
 		btnQuanLyKhachHang.setFocusPainted(false);
 		btnQuanLyKhachHang.setIcon(new ImageIcon(getClass().getResource("/images/customer.png")));
@@ -371,7 +380,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		});
 
 		btnThanhToan = new JButton("Thanh Toán");
-		btnThanhToan.setBorder(null);
+		btnThanhToan.setHorizontalAlignment(SwingConstants.LEADING);
+		btnThanhToan.setBorder(new EmptyBorder(0, 10, 0, 0));
+		btnThanhToan.setIcon(new ImageIcon(getClass().getResource("/images/pay.png")));
 		btnThanhToan.setBorderPainted(false);
 		btnThanhToan.setFocusPainted(false);
 		btnThanhToan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
