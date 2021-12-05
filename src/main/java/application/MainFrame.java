@@ -21,7 +21,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Insets;
 
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
@@ -63,6 +62,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JMenu mnTaiKhoan;
 	private JPanel panelManageMenu;
 	private JButton btnQuanLyKhachHang;
+	private JLabel lblTen;
+	private JLabel lblChucVu;
+	private JButton btnThanhToan;
 
 	private DialogGioiThieu gioiThieuDialog;
 	private pnlQuanLyNhanVien quanLyNhanVienPanel;
@@ -75,11 +77,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	private pnlDatPhong panelDatPhong;
 	private pnlThanhToan thanhToanPanel;
 	public static JLayeredPane layeredPane;
-	private JButton btnThanhToan;
 	private DialogPhimTat phimTatDialog;
 	private pnlManHinhMoDau manHinhMoDau;
-	private JLabel lblTen;
-	private JLabel lblChucVu;
+	private pnlThongKe thongKePanel;
+	
 
 	/**
 	 * Create the frame.
@@ -536,7 +537,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 
 		if (o.equals(btnQLThongKe)) {
-
+			thongKePanel = new pnlThongKe();
+			switchPanel(thongKePanel);
 		}
 
 		if (o.equals(btnQuanLyKhachHang)) {

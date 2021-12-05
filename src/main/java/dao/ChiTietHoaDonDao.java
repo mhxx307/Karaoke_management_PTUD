@@ -107,6 +107,52 @@ public class ChiTietHoaDonDao {
 		return dsCTHD;
 	}
 
+	public List<ChiTietHoaDon> getdsCTHD() {
+		List<ChiTietHoaDon> dsCTHD = new ArrayList<ChiTietHoaDon>();
+		String sql = "SELECT * from Chi_Tiet_Hoa_Don";
+
+		Connection con = MSSQLConnection.getJDBCConnection();
+		PreparedStatement prepareStatement = null;
+		try {
+			prepareStatement = con.prepareStatement(sql);
+			ResultSet rs = prepareStatement.executeQuery();
+			while (rs.next()) {
+				ChiTietHoaDon cthd = new ChiTietHoaDon();
+				HoaDonDao hoaDonDao = new HoaDonDao();
+				PhongDAO phongDao = new PhongDAO();
+				SanPhamDAO sanPhamDao = new SanPhamDAO();
+
+				int maHoaDon = rs.getInt("MaHoaDon");
+
+				HoaDon hoaDon = hoaDonDao.getHoaDonTheoMa("HD" + maHoaDon);
+
+				String maPhong = "MP" + rs.getInt("MaPhong");
+				Phong phong = phongDao.getPhongTheoMa(maPhong);
+
+				String maSanPham = "SP" + rs.getInt("MaSanPham");
+				SanPham sanPham = sanPhamDao.getSanPhamTheoMa(maSanPham);
+
+				cthd.setHoaDon(hoaDon);
+				cthd.setPhong(phong);
+				cthd.setSanPham(sanPham);
+				cthd.setSoLuong(rs.getInt("SoLuong"));
+
+				dsCTHD.add(cthd);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				prepareStatement.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return dsCTHD;
+	}
+
 	public boolean updateSoLuongCTHD(String maHoaDon, int soLuongMoi, String tenSanPham) {
 		String sql = "UPDATE Chi_Tiet_Hoa_Don SET SoLuong=?" + " where MaHoaDon = ? and MaSanPham = ?";
 		int rs = 0;
@@ -121,7 +167,7 @@ public class ChiTietHoaDonDao {
 
 			int maHD = Integer.parseInt(maHoaDon.replaceAll("HD", ""));
 			prepareStatement.setInt(2, maHD);
-			
+
 			SanPhamDAO sanPhamDao = new SanPhamDAO();
 			SanPham sanPham = sanPhamDao.getSanPhamTheoTen(tenSanPham);
 			int maSanPham = Integer.parseInt(sanPham.getMaSanPham().replaceAll("SP", ""));
@@ -150,9 +196,9 @@ public class ChiTietHoaDonDao {
 
 		try {
 			prepareStatement = con.prepareStatement(sql);
-			
+
 			int maHD = Integer.parseInt(maHoaDon.replaceAll("HD", ""));
-			
+
 			SanPhamDAO sanPhamDao = new SanPhamDAO();
 			SanPham sanPham = sanPhamDao.getSanPhamTheoTen(tenSanPham);
 			int maSanPham = Integer.parseInt(sanPham.getMaSanPham().replaceAll("SP", ""));
@@ -183,16 +229,16 @@ public class ChiTietHoaDonDao {
 
 		try {
 			prepareStatement = con.prepareStatement(sql);
-			
+
 			int maHD = Integer.parseInt(maHoaDon.replaceAll("HD", ""));
-			
+
 			SanPhamDAO sanPhamDao = new SanPhamDAO();
 			SanPham sanPham = sanPhamDao.getSanPhamTheoTen(tenSanPham);
 			int maSanPham = Integer.parseInt(sanPham.getMaSanPham().replaceAll("SP", ""));
-			
+
 			prepareStatement.setInt(1, maHD);
 			prepareStatement.setInt(2, maSanPham);
-			
+
 			ResultSet rs = prepareStatement.executeQuery();
 			check = rs.next();
 		} catch (Exception ex) {

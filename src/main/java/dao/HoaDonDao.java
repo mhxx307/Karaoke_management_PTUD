@@ -201,4 +201,41 @@ public class HoaDonDao {
 		}
 		return dsHoaDon;
 	}
+	
+	public List<HoaDon> getDSHoaDon() {
+		List<HoaDon> dsHoaDon = new ArrayList<HoaDon>();
+		NhanVienDAO nvDao = new NhanVienDAO();
+		String sql = "select * from Hoa_Don where TongTien != 0";
+		Connection con = MSSQLConnection.getJDBCConnection();
+		PreparedStatement prepareStatement = null;
+		try {
+			prepareStatement = con.prepareStatement(sql);
+			ResultSet rs = prepareStatement.executeQuery();
+			while (rs.next()) {
+				HoaDon hoaDon = new HoaDon();
+				hoaDon.setMaHoaDon(rs.getString("MaHoaDon"));
+				
+				int maNV = rs.getInt("MaNhanVien");
+				NhanVien nv = nvDao.getNhanVienTheoMa("NV"+maNV);
+				hoaDon.setNhanVien(nv);
+				
+				hoaDon.setNgayTao(rs.getDate("NgayTao"));
+				hoaDon.setTenKhachHang(rs.getString("TenKhachHang"));
+				hoaDon.setTongTien(rs.getDouble("TongTien"));
+				
+				dsHoaDon.add(hoaDon);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				prepareStatement.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return dsHoaDon;
+	}
 }
