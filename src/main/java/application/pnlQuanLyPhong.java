@@ -41,7 +41,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import javax.swing.border.MatteBorder;
 import javax.swing.ImageIcon;
 
 public class pnlQuanLyPhong extends JPanel {
@@ -73,6 +72,7 @@ public class pnlQuanLyPhong extends JPanel {
 		Color hovertextColor = new Color(250, 130, 49);
 		Color mainColor = new Color(88, 159, 177);
 		Color seperatorColor = new Color(204, 204, 204);
+		Color tableHeaderColor = new Color(42, 143, 178);
 
 		Font tahoma16 = new Font("Tahoma", Font.PLAIN, 16);
 		Font tahoma16Bold = new Font("Tahoma", Font.BOLD, 16);
@@ -92,13 +92,13 @@ public class pnlQuanLyPhong extends JPanel {
 		pnl_DSPhong.setBackground(whiteColor);
 
 		tbl_DanhSachPhong = new JTable();
+		tbl_DanhSachPhong.setFocusable(false);
+		tbl_DanhSachPhong.setFocusTraversalKeysEnabled(false);
 		initTable();
 
-		tbl_DanhSachPhong.setBackground(whiteColor);
-		tbl_DanhSachPhong.setForeground(blackColor);
-//		tbl_DanhSachPhong.setSelectionBackground(Color.gray);
-		tbl_DanhSachPhong.setGridColor(blackColor);
-		tbl_DanhSachPhong.setSelectionForeground(whiteColor);
+		tbl_DanhSachPhong.getTableHeader().setBackground(tableHeaderColor);
+		tbl_DanhSachPhong.getTableHeader().setForeground(whiteColor);
+		tbl_DanhSachPhong.getTableHeader().setFont(tahoma16Bold);
 		tbl_DanhSachPhong.setFont(tahoma16);
 		tbl_DanhSachPhong.setRowHeight(28);
 		tbl_DanhSachPhong.setAutoCreateRowSorter(true);
@@ -133,12 +133,6 @@ public class pnlQuanLyPhong extends JPanel {
 
 		JScrollPane scr_DanhSachPhong = new JScrollPane(tbl_DanhSachPhong);
 		scr_DanhSachPhong.setBackground(whiteColor);
-
-		JTableHeader header = tbl_DanhSachPhong.getTableHeader();
-
-		header.setBackground(whiteColor);
-		header.setForeground(blackColor);
-		header.setFont(tahoma14);
 
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -413,7 +407,6 @@ public class pnlQuanLyPhong extends JPanel {
 		setLayout(groupLayout);
 
 		cmb_MaLoaiPhong.addItemListener(new ItemListener() {
-
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				LoaiPhongDAO loaiPhongDAO = new LoaiPhongDAO();
@@ -425,7 +418,6 @@ public class pnlQuanLyPhong extends JPanel {
 		});
 
 		btn_ThemPhong.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Phong phong = createPhong();

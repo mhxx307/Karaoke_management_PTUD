@@ -43,7 +43,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.border.MatteBorder;
 import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -82,11 +81,13 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		Color seperatorColor = new Color(204, 204, 204);
 		Color hovertextColor = new Color(250, 130, 49);
 		Color blackColor = new Color(51, 51, 51);
+		Color tableHeaderColor = new Color(42, 143, 178);
 
-		Font tahomaBold14 = new Font("Tahoma", Font.BOLD, 14);
+		Font tahoma14Bold = new Font("Tahoma", Font.BOLD, 14);
+		Font tahoma16Bold = new Font("Tahoma", Font.BOLD, 16);
 		Font tahoma16 = new Font("Tahoma", Font.PLAIN, 16);
 		Font tahoma18 = new Font("Tahoma", Font.PLAIN, 18);
-		Font tahomaBold18 = new Font("Tahoma", Font.BOLD, 18);
+		Font tahoma18Bold = new Font("Tahoma", Font.BOLD, 18);
 
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBackground(whiteColor);
@@ -131,7 +132,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		btnTimTenDN.setFocusable(false);
 		btnTimTenDN.setForeground(whiteColor);
 		btnTimTenDN.setIcon(new ImageIcon(getClass().getResource("/images/icons8-search-16.png")));
-		btnTimTenDN.setFont(tahomaBold14);
+		btnTimTenDN.setFont(tahoma14Bold);
 		btnTimTenDN.setBackground(mainColor);
 		btnTimTenDN.setBounds(285, 140, 82, 23);
 		rightPanel.add(btnTimTenDN);
@@ -142,7 +143,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		rightPanel.add(cmbNhapTenDN);
 
 		JLabel lblNewLabel_1_1 = new JLabel("TÌM KIẾM TÀI KHOẢN");
-		lblNewLabel_1_1.setFont(tahomaBold18);
+		lblNewLabel_1_1.setFont(tahoma18Bold);
 		lblNewLabel_1_1.setBounds(10, 11, 222, 22);
 		rightPanel.add(lblNewLabel_1_1);
 
@@ -151,7 +152,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		rightPanel.add(separator_1);
 
 		JLabel lblNewLabel_1 = new JLabel("TH\u00D4NG TIN T\u00C0I KHO\u1EA2N");
-		lblNewLabel_1.setFont(tahomaBold18);
+		lblNewLabel_1.setFont(tahoma18Bold);
 
 		JSeparator separator = new JSeparator();
 
@@ -179,7 +180,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		btnThemTK.setBackground(mainColor);
 		btnThemTK.setForeground(whiteColor);
 		btnThemTK.setIcon(new ImageIcon(getClass().getResource("/images/icons8-add-20.png")));
-		btnThemTK.setFont(tahomaBold14);
+		btnThemTK.setFont(tahoma14Bold);
 
 		btnXoaTK = new JButton("X\u00F3a");
 		btnXoaTK.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -196,7 +197,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		btnXoaTK.setBackground(mainColor);
 		btnXoaTK.setForeground(whiteColor);
 		btnXoaTK.setIcon(new ImageIcon(getClass().getResource("/images/icons8-remove-24.png")));
-		btnXoaTK.setFont(tahomaBold14);
+		btnXoaTK.setFont(tahoma14Bold);
 
 		txtTenDN = new JTextField();
 		txtTenDN.addFocusListener(new FocusAdapter() {
@@ -251,7 +252,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		btnLamMoi.setFocusable(false);
 		btnLamMoi.setIcon(new ImageIcon(getClass().getResource("/images/icons8-refresh-16.png")));
 		btnLamMoi.setForeground(whiteColor);
-		btnLamMoi.setFont(tahomaBold14);
+		btnLamMoi.setFont(tahoma14Bold);
 		btnLamMoi.setBackground(mainColor);
 
 		JLabel lblNewLabel_2_2_1 = new JLabel("Mã nhân viên:");
@@ -393,6 +394,8 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 
 		/** Table danh sách tài khoản **/
 		tblDSTaiKhoan = new JTable();
+		tblDSTaiKhoan.setFocusable(false);
+		tblDSTaiKhoan.setFocusTraversalKeysEnabled(false);
 		tblDSTaiKhoan.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -413,11 +416,13 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 				}
 			}
 		});
-
+		
+		tblDSTaiKhoan.getTableHeader().setBackground(tableHeaderColor);
+		tblDSTaiKhoan.getTableHeader().setForeground(whiteColor);
+		tblDSTaiKhoan.getTableHeader().setFont(tahoma16Bold);
 		tblDSTaiKhoan.setFont(tahoma16);
 		tblDSTaiKhoan.setRowHeight(28);
 		tblDSTaiKhoan.setAutoCreateRowSorter(true);
-		tblDSTaiKhoan.getTableHeader().setFont(tahoma16);
 
 		initTable();
 

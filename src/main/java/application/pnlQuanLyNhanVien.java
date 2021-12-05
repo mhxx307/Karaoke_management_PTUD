@@ -94,9 +94,11 @@ public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 		Color seperatorColor = new Color(204, 204, 204);
 		Color hovertextColor = new Color(250, 130, 49);
 		Color blackColor = new Color(51, 51, 51);
+		Color tableHeaderColor = new Color(42, 143, 178);
 
 		Font tahoma14 = new Font("Tahoma", Font.BOLD, 14);
 		Font tahoma16 = new Font("Tahoma", Font.PLAIN, 16);
+		Font tahoma16Bold = new Font("Tahoma", Font.BOLD, 16);
 		Font tahoma18 = new Font("Tahoma", Font.BOLD, 18);
 
 		JPanel panel = new JPanel();
@@ -372,11 +374,13 @@ public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 				}
 			}
 		});
-
+		
+		tblDanhSachNhanVien.getTableHeader().setFont(tahoma16Bold);
+		tblDanhSachNhanVien.getTableHeader().setBackground(tableHeaderColor);
+		tblDanhSachNhanVien.getTableHeader().setForeground(whiteColor);
 		tblDanhSachNhanVien.setFont(tahoma16);
 		tblDanhSachNhanVien.setRowHeight(28);
 		tblDanhSachNhanVien.setAutoCreateRowSorter(true);
-		tblDanhSachNhanVien.getTableHeader().setFont(tahoma16);
 
 		// chỉ cho khách hàng được chọn 1 dòng ở 1 thời điểm
 		tblDanhSachNhanVien.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

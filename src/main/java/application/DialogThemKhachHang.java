@@ -10,6 +10,8 @@ import javax.swing.JDialog;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -35,30 +37,40 @@ public class DialogThemKhachHang extends JDialog {
 	 * Create the dialog.
 	 */
 	public DialogThemKhachHang() {
+		
+		Font tahoma16 = new Font("Tahoma", Font.PLAIN, 16);
+		Color whiteColor = new Color(255, 255, 255);
+		Color mainColor = new Color(88, 159, 177);
+		Color hoverColor = new Color(121, 178, 192);
+		
 		setSize(620, 300);
 		setLocationRelativeTo(null);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Tên khách hàng:");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1_1.setFont(tahoma16);
 
 		JLabel lblNewLabel_1_1_1 = new JLabel("Số điện thoại:");
 		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1_1_1.setFont(tahoma16);
 
 		JLabel lblNewLabel = new JLabel("THÔNG TIN KHÁCH HÀNG");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
 
 		txtTenKH = new JTextField();
-		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtTenKH.setFont(tahoma16);
 		txtTenKH.setColumns(10);
 
 		txtSDT = new JTextField();
-		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtSDT.setFont(tahoma16);
 		txtSDT.setColumns(10);
 
 		btnThem = new JButton("Thêm khách hàng");
+		btnThem.setFocusPainted(false);
+		btnThem.setFocusTraversalKeysEnabled(false);
+		btnThem.setFocusable(false);
+		btnThem.setBorder(null);
 		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -86,46 +98,79 @@ public class DialogThemKhachHang extends JDialog {
 				}
 			}
 		});
-		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnThem.setFont(tahoma16);
 
 		btnDong = new JButton("Đóng");
-		btnDong.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnDong.setFocusPainted(false);
+		btnDong.setFocusTraversalKeysEnabled(false);
+		btnDong.setFocusable(false);
+		btnDong.setBorder(null);
+		btnDong.setFont(tahoma16);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 135,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNewLabel_1_1_1, GroupLayout.PREFERRED_SIZE, 135,
-										GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup().addComponent(btnThem).addGap(18)
-										.addComponent(btnDong, GroupLayout.PREFERRED_SIZE, 159,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(95))
-								.addGroup(groupLayout.createSequentialGroup()
-										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-												.addComponent(txtSDT, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
-												.addComponent(txtTenKH, GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
-										.addGap(18)))));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup()
-				.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE).addGap(51)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_1_1_1, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(btnThem, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+							.addGap(29)
+							.addComponent(btnDong, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(txtSDT, GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+								.addComponent(txtTenKH, GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE))
+							.addGap(18))))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addGap(51)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(txtTenKH, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-				.addGap(23)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+					.addGap(23)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(txtSDT, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_1_1_1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(btnThem).addComponent(btnDong,
-						GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-				.addGap(20)));
+					.addGap(57)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnThem, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+						.addComponent(btnDong, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
+					.addGap(20))
+		);
 		getContentPane().setLayout(groupLayout);
+		
+		btnDong.setBackground(mainColor);
+		btnDong.setForeground(whiteColor);
+		btnDong.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnDong.setBackground(hoverColor);
+			}
 
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnDong.setBackground(mainColor);
+			}
+		});
+		
+		btnThem.setBackground(mainColor);
+		btnThem.setForeground(whiteColor);
+		btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnThem.setBackground(hoverColor);
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnThem.setBackground(mainColor);
+			}
+		});
 	}
 
 	// tạo mới khách hàng

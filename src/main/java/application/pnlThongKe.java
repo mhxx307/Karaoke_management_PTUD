@@ -1,3 +1,8 @@
+/**
+ * La Võ Minh Quân
+ * 19441111
+ * Mô tả: thống kê doanh thu bán được trong ngày, thống kê số lượng sản phẩm bán được bằng biểu đồ
+ */
 package application;
 
 import javax.swing.JPanel;

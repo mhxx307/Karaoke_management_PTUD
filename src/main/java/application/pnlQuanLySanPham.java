@@ -73,8 +73,10 @@ public class pnlQuanLySanPham extends JPanel implements ActionListener {
 		Color blackColor = new Color(51, 51, 51);
 		Color hovertextColor = new Color(250, 130, 49);
 		Color hoverColor = new Color(121, 178, 192);
+		Color tableHeaderColor = new Color(42, 143, 178);
 
 		Font tahoma16 = new Font("Tahoma", Font.PLAIN, 16);
+		Font tahoma16Bold = new Font("Tahoma", Font.BOLD, 16);
 		Font tahoma14 = new Font("Tahoma", Font.PLAIN, 14);
 		Font tahoma14Bold = new Font("Tahoma", Font.BOLD, 14);
 		Font tahoma20Bold = new Font("Tahoma", Font.BOLD, 20);
@@ -187,7 +189,9 @@ public class pnlQuanLySanPham extends JPanel implements ActionListener {
 		tblSanPham.setFont(tahoma16);
 		tblSanPham.setRowHeight(28);
 		tblSanPham.setAutoCreateRowSorter(true);
-		tblSanPham.getTableHeader().setFont(tahoma16);
+		tblSanPham.getTableHeader().setFont(tahoma16Bold);
+		tblSanPham.getTableHeader().setBackground(tableHeaderColor);
+		tblSanPham.getTableHeader().setForeground(whiteColor);
 		scrollPane.setViewportView(tblSanPham);
 		initTableSanPham();
 		panel_2.setLayout(gl_panel_2);
@@ -369,7 +373,9 @@ public class pnlQuanLySanPham extends JPanel implements ActionListener {
 		tblLoaiSanPham.setFont(tahoma16);
 		tblLoaiSanPham.setRowHeight(28);
 		tblLoaiSanPham.setAutoCreateRowSorter(true);
-		tblLoaiSanPham.getTableHeader().setFont(tahoma16);
+		tblLoaiSanPham.getTableHeader().setFont(tahoma16Bold);
+		tblLoaiSanPham.getTableHeader().setBackground(tableHeaderColor);
+		tblLoaiSanPham.getTableHeader().setForeground(whiteColor);
 		initTableLoaiSP();
 		scrollPane_1.setViewportView(tblLoaiSanPham);
 

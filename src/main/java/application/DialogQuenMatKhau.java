@@ -43,14 +43,18 @@ public class DialogQuenMatKhau extends JDialog implements ActionListener {
 
 		/** set font & color **/
 		Color whiteColor = new Color(255, 255, 255);
+		Color mainColor = new Color(88, 159, 177);
+		Color hoverColor = new Color(121, 178, 192);
 		
 		Font tahoma14 = new Font("Tahoma", Font.PLAIN, 14);
 		Font tahoma16 = new Font("Tahoma", Font.PLAIN, 16);
 		Font tahoma20 = new Font("Tahoma", Font.BOLD, 20);
 
 		setBounds(100, 100, 829, 475);
+		setTitle("Quên mật khẩu");
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -93,6 +97,9 @@ public class DialogQuenMatKhau extends JDialog implements ActionListener {
 		txtTenDN.setColumns(10);
 
 		txtCauHoi = new JTextField();
+		txtCauHoi.setEditable(false);
+		txtCauHoi.setFocusTraversalKeysEnabled(false);
+		txtCauHoi.setFocusable(false);
 		txtCauHoi.setFont(tahoma16);
 		txtCauHoi.setColumns(10);
 		txtCauHoi.setBounds(268, 150, 393, 25);
@@ -113,32 +120,94 @@ public class DialogQuenMatKhau extends JDialog implements ActionListener {
 		contentPanel.add(txtMatKhauMoi);
 
 		btnLuu = new JButton("L\u01B0u");
+		btnLuu.setFocusable(false);
+		btnLuu.setFocusTraversalKeysEnabled(false);
+		btnLuu.setFocusPainted(false);
+		btnLuu.setBorder(null);
 		btnLuu.setRequestFocusEnabled(false);
-		btnLuu.setBackground(whiteColor);
 		btnLuu.setFont(tahoma14);
 		btnLuu.setBounds(268, 332, 105, 27);
 		contentPanel.add(btnLuu);
 
 		btnTroLai = new JButton("Tr\u1EDF l\u1EA1i");
+		btnTroLai.setFocusable(false);
+		btnTroLai.setFocusTraversalKeysEnabled(false);
+		btnTroLai.setFocusPainted(false);
+		btnTroLai.setBorder(null);
 		btnTroLai.setRequestFocusEnabled(false);
 		btnTroLai.setFont(tahoma14);
-		btnTroLai.setBackground(whiteColor);
 		btnTroLai.setBounds(556, 332, 105, 27);
 		contentPanel.add(btnTroLai);
 
 		btnTim = new JButton("T\u00ECm");
+		btnTim.setFocusable(false);
+		btnTim.setFocusTraversalKeysEnabled(false);
+		btnTim.setFocusPainted(false);
+		btnTim.setBorder(null);
 		btnTim.setRequestFocusEnabled(false);
 		btnTim.setFont(tahoma14);
-		btnTim.setBackground(whiteColor);
 		btnTim.setBounds(698, 91, 105, 27);
 		contentPanel.add(btnTim);
 
 		btnLamMoi = new JButton("Làm mới");
+		btnLamMoi.setFocusable(false);
+		btnLamMoi.setFocusTraversalKeysEnabled(false);
+		btnLamMoi.setFocusPainted(false);
+		btnLamMoi.setBorder(null);
 		btnLamMoi.setRequestFocusEnabled(false);
 		btnLamMoi.setFont(tahoma14);
-		btnLamMoi.setBackground(whiteColor);
 		btnLamMoi.setBounds(698, 149, 105, 27);
 		contentPanel.add(btnLamMoi);
+		
+		/**/
+		btnLamMoi.setBackground(mainColor);
+		btnLamMoi.setForeground(whiteColor);
+		btnLamMoi.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnLamMoi.setBackground(hoverColor);
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnLamMoi.setBackground(mainColor);
+			}
+		});
+		
+		btnLuu.setBackground(mainColor);
+		btnLuu.setForeground(whiteColor);
+		btnLuu.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnLuu.setBackground(hoverColor);
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnLuu.setBackground(mainColor);
+			}
+		});
+		
+		btnTim.setBackground(mainColor);
+		btnTim.setForeground(whiteColor);
+		btnTim.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnTim.setBackground(hoverColor);
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnTim.setBackground(mainColor);
+			}
+		});
+		
+		btnTroLai.setBackground(mainColor);
+		btnTroLai.setForeground(whiteColor);
+		btnTroLai.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnTroLai.setBackground(hoverColor);
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnTroLai.setBackground(mainColor);
+			}
+		});
+		/**/
 
 		btnTim.addActionListener(this);
 		btnLamMoi.addActionListener(this);

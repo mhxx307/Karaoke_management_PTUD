@@ -111,8 +111,10 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 		Color whiteColor = new Color(255, 255, 255);
 		Color blackColor = new Color(51, 51, 51);
 		Color hovertextColor = new Color(250, 130, 49);
+		Color tableHeaderColor = new Color(42, 143, 178);
 
 		Font tahoma18Bold = new Font("Tahoma", Font.BOLD, 18);
+		Font tahoma16Bold = new Font("Tahoma", Font.BOLD, 16);
 		Font tahoma15Bold = new Font("Tahoma", Font.BOLD, 15);
 		Font tahoma13Bold = new Font("Tahoma", Font.BOLD, 13);
 		Font tahoma14Bold = new Font("Tahoma", Font.BOLD, 14);
@@ -472,7 +474,9 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 		tblDichVu.setFont(tahoma13);
 		tblDichVu.setRowHeight(28);
 		tblDichVu.setAutoCreateRowSorter(true);
-		tblDichVu.getTableHeader().setFont(tahoma13);
+		tblDichVu.getTableHeader().setFont(tahoma14Bold);
+		tblDichVu.getTableHeader().setBackground(tableHeaderColor);
+		tblDichVu.getTableHeader().setForeground(whiteColor);
 		// chỉ cho khách hàng được chọn 1 dòng ở 1 thời điểm
 		tblDichVu.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_dichvu.setViewportView(tblDichVu);
@@ -498,7 +502,9 @@ public class pnlThanhToan extends JPanel implements ActionListener {
 		tblPhongDangSuDung.setFont(tahoma16);
 		tblPhongDangSuDung.setRowHeight(28);
 		tblPhongDangSuDung.setAutoCreateRowSorter(true);
-		tblPhongDangSuDung.getTableHeader().setFont(tahoma16);
+		tblPhongDangSuDung.getTableHeader().setFont(tahoma16Bold);
+		tblPhongDangSuDung.getTableHeader().setBackground(tableHeaderColor);
+		tblPhongDangSuDung.getTableHeader().setForeground(whiteColor);
 		// chỉ cho khách hàng được chọn 1 dòng ở 1 thời điểm
 		tblPhongDangSuDung.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_phongSuDung.setViewportView(tblPhongDangSuDung);

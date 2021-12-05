@@ -66,11 +66,12 @@ public class pnlQuanLyKhachHang extends JPanel implements ActionListener {
 		Color mainColor = new Color(88, 159, 177);
 		Color blackColor = new Color(51, 51, 51);
 		Color hovertextColor = new Color(250, 130, 49);
-		Color borderColor = new Color(153, 153, 153);
 		Color hoverColor = new Color(121, 178, 192);
 		Color seperatorColor = new Color(204, 204, 204);
+		Color tableHeaderColor = new Color(42, 143, 178);
 
 		Font tahoma16 = new Font("Tahoma", Font.PLAIN, 16);
+		Font tahoma16Bold = new Font("Tahoma", Font.BOLD, 16);
 		Font tahoma18 = new Font("Tahoma", Font.PLAIN, 18);
 
 		JPanel panel = new JPanel();
@@ -308,7 +309,9 @@ public class pnlQuanLyKhachHang extends JPanel implements ActionListener {
 		tblKhachHang.setFont(tahoma16);
 		tblKhachHang.setRowHeight(28);
 		tblKhachHang.setAutoCreateRowSorter(true);
-		tblKhachHang.getTableHeader().setFont(tahoma16);
+		tblKhachHang.getTableHeader().setFont(tahoma16Bold);
+		tblKhachHang.getTableHeader().setBackground(tableHeaderColor);
+		tblKhachHang.getTableHeader().setForeground(whiteColor);
 		panel_1.setLayout(gl_panel_1);
 		setLayout(groupLayout);
 
