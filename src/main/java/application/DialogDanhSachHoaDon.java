@@ -71,6 +71,7 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 	private JLabel lblNewLabel_3;
 	private JComboBox<String> cmbTimHD;
 	private JButton btnXuatHoaDon;
+	private JButton btnLammoi;
 
 	/**
 	 * Create the dialog.
@@ -83,6 +84,7 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 		Font tahoma16 = new Font("Tahoma", Font.PLAIN, 16);
 		Font tahoma14Bold = new Font("Tahoma", Font.BOLD, 14);
 		Color whiteColor = new Color(255, 255, 255);
+		Color tableHeaderColor = new Color(42, 143, 178);
 
 		setAlwaysOnTop(true);
 
@@ -104,6 +106,8 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 		tblChiTietHoaDon.setRowHeight(28);
 		tblChiTietHoaDon.setAutoCreateRowSorter(true);
 		tblChiTietHoaDon.getTableHeader().setFont(tahoma16);
+		tblChiTietHoaDon.getTableHeader().setBackground(tableHeaderColor);
+		tblChiTietHoaDon.getTableHeader().setForeground(whiteColor);
 		tblChiTietHoaDon.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		lblNewLabel_3 = new JLabel("Chi tiết hóa đơn");
@@ -168,6 +172,8 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 		tblHoaDon.setRowHeight(28);
 		tblHoaDon.setAutoCreateRowSorter(true);
 		tblHoaDon.getTableHeader().setFont(tahoma16);
+		tblHoaDon.getTableHeader().setBackground(tableHeaderColor);
+		tblHoaDon.getTableHeader().setForeground(whiteColor);
 		tblHoaDon.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		JLabel lblNewLabel_1 = new JLabel("Qu\u1EA3n l\u00FD h\u00F3a \u0111\u01A1n");
@@ -191,11 +197,26 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 		cmbTimHD = new JComboBox<String>();
 		cmbTimHD.setFocusable(false);
 		cmbTimHD.setFocusTraversalKeysEnabled(false);
+		
+		btnLammoi = new JButton("Làm mới");
+		btnLammoi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtTimKiem.setText("");
+				dfModelHoaDon.setRowCount(0);
+				dfModelChiTietHoaDon.setRowCount(0);
+				loadDataToTableHoaDon();
+				tblHoaDon.setRowSorter(null);
+			}
+		});
+		btnLammoi.setForeground(Color.WHITE);
+		btnLammoi.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLammoi.setBorder(null);
+		btnLammoi.setBackground(new Color(88, 159, 177));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(140)
 							.addComponent(cmbTimHD, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
@@ -203,10 +224,15 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 							.addComponent(txtTimKiem, GroupLayout.PREFERRED_SIZE, 244, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE))
-						.addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
-						.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addContainerGap(1, Short.MAX_VALUE))
+							.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+					.addComponent(btnLammoi, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+					.addGap(22))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
+						.addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -216,12 +242,12 @@ public class DialogDanhSachHoaDon extends JDialog implements ActionListener {
 					.addGap(16)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(txtTimKiem, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(cmbTimHD, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(cmbTimHD, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnLammoi, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
 					.addGap(16)
 					.addComponent(lblNewLabel_2)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 486, GroupLayout.PREFERRED_SIZE)
-					.addGap(46))
+					.addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 

@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -42,6 +43,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import dao.NhanVienDAO;
 import entity.NhanVien;
@@ -54,6 +56,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 	/**
@@ -73,14 +77,14 @@ public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 	private JButton btnThemNV;
 	private JButton btnCapNhat;
 	private JButton btnLamMoi;
-	private JButton btnTimKiem;
 	private JButton btnMoHinh;
 	private JLabel lblImage;
 	private ButtonGroup rdGoup;
 
 	private MainFrame mainFrame;
 	private byte[] personalImage;
-	private JComboBox<String> cmbTimMaNhanVien;
+	private JComboBox<String> cmbTim;
+	private JTextField txtTim;
 
 	/**
 	 * Create the panel.
@@ -131,53 +135,48 @@ public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 				.addPreferredGap(ComponentPlacement.RELATED)
 				.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)));
 
-		JLabel lblNewLabel_3 = new JLabel("Mã nhân viên:");
-		lblNewLabel_3.setFont(tahoma16);
-
-		btnTimKiem = new JButton("Tìm");
-		btnTimKiem.setFocusTraversalKeysEnabled(false);
-		btnTimKiem.setFocusPainted(false);
-		btnTimKiem.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnTimKiem.setBackground(hoverColor);
-			}
-
-			public void mouseExited(java.awt.event.MouseEvent evt) {
-				btnTimKiem.setBackground(mainColor);
-			}
-		});
-		btnTimKiem.setActionCommand("Tìm");
-		btnTimKiem.setBorder(null);
-		btnTimKiem.setIcon(new ImageIcon(getClass().getResource("/images/icons8-search-16.png")));
-		btnTimKiem.setForeground(whiteColor);
-		btnTimKiem.setBackground(mainColor);
-		btnTimKiem.setFont(tahoma14);
-		btnTimKiem.setFocusable(false);
-
 		JLabel lblTmKim = new JLabel("Tìm kiếm");
 		lblTmKim.setForeground(new Color(0, 102, 102));
 		lblTmKim.setFont(tahoma18);
 
-		cmbTimMaNhanVien = new JComboBox<String>();
-		cmbTimMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		cmbTim = new JComboBox<String>();
+		cmbTim.addItem("Tìm theo mã nhân viên");
+		cmbTim.addItem("Tìm theo tên nhân viên");
+		cmbTim.setFont(new Font("Tahoma", Font.BOLD, 13));
+		
+		txtTim = new JTextField();
+		txtTim.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String keyword =  txtTim.getText();
+				search(keyword);
+			}
+		});
+		txtTim.setColumns(10);
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
-		gl_panel_3.setHorizontalGroup(gl_panel_3.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_3
-				.createSequentialGroup().addContainerGap()
-				.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+		gl_panel_3.setHorizontalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblTmKim, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_3.createSequentialGroup().addComponent(lblNewLabel_3)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(cmbTimMaNhanVien, 0, 172, Short.MAX_VALUE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnTimKiem, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)))
-				.addContainerGap()));
-		gl_panel_3.setVerticalGroup(gl_panel_3.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_3
-				.createSequentialGroup().addContainerGap()
-				.addComponent(lblTmKim, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE).addGap(18)
-				.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel_3)
-						.addComponent(btnTimKiem, GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-						.addComponent(cmbTimMaNhanVien, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-				.addContainerGap(120, Short.MAX_VALUE)));
+						.addGroup(Alignment.TRAILING, gl_panel_3.createSequentialGroup()
+							.addComponent(cmbTim, 0, 172, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtTim, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_panel_3.setVerticalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblTmKim, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(cmbTim, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtTim, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(132, Short.MAX_VALUE))
+		);
 		panel_3.setLayout(gl_panel_3);
 
 		btnThemNV = new JButton("Thêm");
@@ -592,7 +591,6 @@ public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 		btnThemNV.addActionListener(this);
 		btnCapNhat.addActionListener(this);
 		btnLamMoi.addActionListener(this);
-		btnTimKiem.addActionListener(this);
 		btnMoHinh.addActionListener(this);
 	}
 
@@ -603,9 +601,11 @@ public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 		txaDiaChi.setText("");
 		txtSoDT.setText("");
 		txtNamSinh.setText("");
+		txtTim.setText("");
 		personalImage = null;
 		// set hình hảnh mặc định khi người dùng k chọn ảnh nào
 		lblImage.setIcon(new ImageIcon(getClass().getResource("/images/icons8-user-96.png")));
+		txtHoTen.requestFocus();
 	}
 
 	/**
@@ -624,7 +624,6 @@ public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 		dfModel.setColumnIdentifiers(new String[] { "Mã nhân viên", "Họ tên", "Email", "Số điện thoại", "Năm sinh",
 				"Giới tính", "Địa chỉ" });
 		tblDanhSachNhanVien.setModel(dfModel);
-		loadDataToComboMaNV();
 	}
 
 	/**
@@ -677,17 +676,6 @@ public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 		return nv;
 	}
 
-	/**
-	 * tải dữ liệu từ cơ sở dữ liệu vào combobox mã nhân viên
-	 */
-	private void loadDataToComboMaNV() {
-		NhanVienDAO nhanVienDAO = new NhanVienDAO();
-		List<NhanVien> listNV = nhanVienDAO.getDanhSachNhanVien();
-		for (NhanVien nv : listNV) {
-			cmbTimMaNhanVien.addItem(nv.getMaNhanVien());
-		}
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -713,8 +701,7 @@ public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 					MessageDialogHelpers.showMessageDialog(mainFrame, "Thông báo", "Nhân viên đã thêm thành công");
 					dfModel.setRowCount(0);
 					loadDataToTable();
-					cmbTimMaNhanVien.removeAllItems();
-					loadDataToComboMaNV();
+					cmbTim.removeAllItems();
 				} else {
 					MessageDialogHelpers.showErrorDialog(mainFrame, "Lỗi", "Thêm không thành công");
 				}
@@ -801,24 +788,27 @@ public class pnlQuanLyNhanVien extends JPanel implements ActionListener {
 			}
 		}
 
-		// TÌM KIẾM
-		if (o.equals(btnTimKiem)) {
-			NhanVienDAO nvDAO = new NhanVienDAO();
-			String ma = (String) cmbTimMaNhanVien.getSelectedItem();
-			NhanVien nv = nvDAO.getNhanVienTheoMa(ma);
-			if (nv != null) {
-				dfModel.setRowCount(0);
-				dfModel.addRow(new Object[] { nv.getMaNhanVien(), nv.getHoTen(), nv.getEmail(), nv.getSoDT(),
-						nv.getNamSinh(), nv.getGioiTinh() == 1 ? "Nam" : "Nữ", nv.getDiaChi() });
-			}
-		}
-
 		// LÀM MỚI
 		if (o.equals(btnLamMoi)) {
 			lamMoiText();
 			dfModel.setRowCount(0);
 			loadDataToTable();
+			tblDanhSachNhanVien.setRowSorter(null);
 		}
 	}
+	
+	
+	public void search(String str) {
+		dfModel = (DefaultTableModel) tblDanhSachNhanVien.getModel();
+		TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(dfModel);
+		tblDanhSachNhanVien.setRowSorter(trs);
 
+		if (cmbTim.getSelectedItem().toString().equals("Tìm theo mã nhân viên")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 0));
+		}
+
+		if (cmbTim.getSelectedItem().toString().equals("Tìm theo tên nhân viên")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 1));
+		}
+	}
 }

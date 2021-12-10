@@ -15,6 +15,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import dao.NhanVienDAO;
 import dao.TaiKhoanDAO;
@@ -33,6 +34,7 @@ import javax.swing.JSeparator;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 
 import java.awt.Font;
 
@@ -47,6 +49,8 @@ import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.LineBorder;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 	/**
@@ -58,8 +62,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 	private JTextField txtTenDN;
 	private JPasswordField txtMatKhau;
 	private JComboBox<String> cmbVaiTro;
-	private JComboBox<String> cmbNhapTenDN;
-	private JButton btnTimTenDN;
+	private JComboBox<String> cmbTim;
 	private JButton btnThemTK;
 	private JButton btnXoaTK;
 
@@ -68,6 +71,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 	private JComboBox<String> cmbMaNhanVien;
 	private JComboBox<String> cmbListCauHoi;
 	private JTextArea txaCauTraLoi;
+	private JTextField txtTim;
 
 	/**
 	 * Create the panel.
@@ -118,29 +122,11 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		lblNewLabel_2_3.setBounds(10, 104, 177, 26);
 		rightPanel.add(lblNewLabel_2_3);
 
-		btnTimTenDN = new JButton("T\u00ECm");
-		btnTimTenDN.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnTimTenDN.setBackground(hoverColor);
-			}
-
-			public void mouseExited(java.awt.event.MouseEvent evt) {
-				btnTimTenDN.setBackground(mainColor);
-			}
-		});
-		btnTimTenDN.setBorder(null);
-		btnTimTenDN.setFocusable(false);
-		btnTimTenDN.setForeground(whiteColor);
-		btnTimTenDN.setIcon(new ImageIcon(getClass().getResource("/images/icons8-search-16.png")));
-		btnTimTenDN.setFont(tahoma14Bold);
-		btnTimTenDN.setBackground(mainColor);
-		btnTimTenDN.setBounds(285, 140, 82, 23);
-		rightPanel.add(btnTimTenDN);
-
-		cmbNhapTenDN = new JComboBox<String>();
-		cmbNhapTenDN.setFont(tahoma16);
-		cmbNhapTenDN.setBounds(10, 141, 265, 22);
-		rightPanel.add(cmbNhapTenDN);
+		cmbTim = new JComboBox<String>();
+		cmbTim.addItem("Tìm theo tên tài khoản");
+		cmbTim.setFont(tahoma16);
+		cmbTim.setBounds(10, 141, 177, 26);
+		rightPanel.add(cmbTim);
 
 		JLabel lblNewLabel_1_1 = new JLabel("TÌM KIẾM TÀI KHOẢN");
 		lblNewLabel_1_1.setFont(tahoma18Bold);
@@ -150,6 +136,17 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(10, 44, 373, 2);
 		rightPanel.add(separator_1);
+		
+		txtTim = new JTextField();
+		txtTim.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				search(txtTim.getText());
+			}
+		});
+		txtTim.setBounds(192, 141, 163, 26);
+		rightPanel.add(txtTim);
+		txtTim.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("TH\u00D4NG TIN T\u00C0I KHO\u1EA2N");
 		lblNewLabel_1.setFont(tahoma18Bold);
@@ -440,7 +437,6 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		btnThemTK.addActionListener(this);
 		btnXoaTK.addActionListener(this);
 		btnLamMoi.addActionListener(this);
-		btnTimTenDN.addActionListener(this);
 	}
 
 	/**
@@ -458,7 +454,6 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 
 		dfModel.setColumnIdentifiers(new String[] { "Tên đăng nhập", "Vai trò", "Mã nhân viên" });
 		tblDSTaiKhoan.setModel(dfModel);
-		loadDataToCombo();
 		loadDataToComboMaNV();
 	}
 
@@ -474,17 +469,6 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * tải dữ liệu từ cơ sở dữ liệu vào combobox tên đăng nhập
-	 */
-	private void loadDataToCombo() {
-		TaiKhoanDAO tkDAO = new TaiKhoanDAO();
-		List<TaiKhoan> listTK = tkDAO.getDanhSachTaiKhoan();
-		for (TaiKhoan taiKhoan : listTK) {
-			cmbNhapTenDN.addItem(taiKhoan.getTenDangNhap());
 		}
 	}
 
@@ -536,6 +520,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 		cmbVaiTro.setSelectedIndex(0);
 		cmbListCauHoi.setSelectedIndex(0);
 		txaCauTraLoi.setText("");
+		txtTim.setText("");
 		txtTenDN.requestFocus();
 	}
 
@@ -568,7 +553,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 					MessageDialogHelpers.showMessageDialog(mainFrame, "Thông báo", "Tài khoản đã thêm thành công");
 					dfModel.setRowCount(0);
 					loadDataToTable();
-					cmbNhapTenDN.addItem(tk.getTenDangNhap());
+					cmbTim.addItem(tk.getTenDangNhap());
 					lamMoiText();
 				}
 			}
@@ -598,7 +583,7 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 							MessageDialogHelpers.showMessageDialog(mainFrame, "Thông báo", "Xóa thành công");
 							dfModel.setRowCount(0);
 							loadDataToTable();
-							cmbNhapTenDN.removeItem(tenDN);
+							cmbTim.removeItem(tenDN);
 						} else {
 							MessageDialogHelpers.showErrorDialog(mainFrame, "Lỗi", "Xóa không thành công");
 						}
@@ -614,22 +599,24 @@ public class pnlQuanLyTaiKhoan extends JPanel implements ActionListener {
 			}
 		}
 
-		// TIM TAI KHOAN
-		if (o.equals(btnTimTenDN)) {
-			String ten = (String) cmbNhapTenDN.getSelectedItem();
-			TaiKhoanDAO tkDAO = new TaiKhoanDAO();
-			TaiKhoan tk = tkDAO.getTaiKhoanTheoTen(ten);
-			if (tk != null) {
-				dfModel.setRowCount(0);
-				dfModel.addRow(new Object[] { tk.getTenDangNhap(), tk.getVaiTro() });
-			}
-		}
-
 		// LAM MOI
 		if (o.equals(btnLamMoi)) {
 			lamMoiText();
 			dfModel.setRowCount(0);
 			loadDataToTable();
+			tblDSTaiKhoan.setRowSorter(null);
 		}
+	}
+	
+	public void search(String str) {
+		dfModel = (DefaultTableModel) tblDSTaiKhoan.getModel();
+		TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(dfModel);
+		tblDSTaiKhoan.setRowSorter(trs);
+
+		if (cmbTim.getSelectedItem().toString().equals("Tìm theo tên tài khoản")) {
+			trs.setRowFilter(RowFilter.regexFilter(str, 0));
+		}
+
+		
 	}
 }
